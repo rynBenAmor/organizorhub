@@ -1,0 +1,106 @@
+{% extends 'leads/base.html' %}
+
+{% block content %}
+
+<style>
+    h1 {
+        color: #333;
+    }
+
+    h5 {
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    form p {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        background: rgba(107, 238, 159, 0.1);
+
+    }
+</style>
+
+
+<section class="text-gray-600 body-font overflow-hidden min-w-[93.3333%]">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">DJCRM / Lead</h2>
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-4"> {{lead.first_name}} {{lead.last_name}}
+                </h1>
+                <div class="flex mb-4">
+                    <a href="{% url 'leads:detail' lead.pk %}"
+                        class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Overview</a>
+                    <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Reviews</a>
+                    <a href="{% url 'leads:update' lead.pk %}"
+                        class="flex-grow text-green-500 border-b-2 border-green-500 py-2 text-lg px-1">Update
+                        Details</a>
+
+                </div>
+
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button
+                        class=" w-10/12 -mb-3 flex self-center bg-blue-700 hover:bg-blue-300 rounded text-white font-bold py-2 px-4 ">
+                        Submit
+                    </button>
+                </form>
+
+
+
+            </div>
+            <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                src="https://dummyimage.com/400x400">
+        </div>
+        <a href="{% url 'leads:delete' lead.pk %}"
+            class=" w-1/5 mt-3 ml-auto  flex self-center bg-red-700 hover:bg-red-300 rounded text-white font-bold py-2 px-4 text-center ">Delete</a>
+    </div>
+</section>
+
+
+
+<script>
+    // Save scroll position before the page unloads
+    window.addEventListener("beforeunload", function () {
+        const currentScrollPosition = window.scrollY;
+        const storedScrollPosition = localStorage.getItem("scrollPosition");
+
+        // Only set the item if the current position is different from the stored position
+        if (storedScrollPosition !== null && parseInt(storedScrollPosition, 10) !== currentScrollPosition) {
+            localStorage.setItem("scrollPosition", currentScrollPosition);
+        } else if (storedScrollPosition === null) {
+            // If no scroll position is stored, set it
+            localStorage.setItem("scrollPosition", currentScrollPosition);
+        }
+    });
+
+    // Restore scroll position once the DOM content is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition, 10));
+        }
+    });
+
+</script>
+
+
+{% endblock %}

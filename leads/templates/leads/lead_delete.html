@@ -1,0 +1,31 @@
+{% extends 'leads/base.html' %}
+{% block content %}
+    <style>
+        
+        h1 {
+            color: #333;
+        }
+        h5 {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+    
+    </style>
+
+
+    <h1>Are you sure ?</h1>
+    <h5>This lead will be gone forever !</h5>
+
+    <form method="POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="w-1/5 mt-3 ml-auto flex self-center bg-red-700 hover:bg-red-300 rounded text-white font-bold py-2 px-4 text-center " type="submit">Delete</button>
+        <a href="{% url 'leads:list' %}" class="w-1/5 mt-3 ml-auto flex self-center bg-green-700 hover:bg-green-300 rounded text-white font-bold py-2 px-4 text-center " > Cancel </a>
+    </form>
+
+
+{% endblock content %}
+    
+    
+ 

@@ -1,0 +1,104 @@
+{% extends 'leads/base.html' %}
+
+{% block title %}
+DJCRM/Sign Up
+{% endblock title %}
+
+{% block extra_head %}
+<style>
+    #scoping-section h2 {
+        color: #333;
+        font-size: 1.875rem;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #scoping-section h5 {
+        color: #666;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    #scoping-section form p {
+        margin-bottom: 15px;
+    }
+
+    #scoping-section label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    #scoping-section input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 1rem;
+    }
+
+    #scoping-section input:focus {
+        background: rgba(107, 238, 159, 0.1);
+        outline: none;
+        border-color: #6bef9f;
+    }
+
+    #scoping-section a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        background-color: #6bef9f;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 1.125rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    #scoping-section a:hover {
+        background-color: #4bc77d;
+    }
+
+    #scoping-section a svg {
+        margin-left: 10px;
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+</style>
+{% endblock extra_head %}
+
+{% block content %}
+<section id="scoping-section" class="min-w-[33.3333%] p-8 mx-auto mt-10 bg-slate-100 rounded-lg drop-shadow-2xl">
+    <div class="neumorphic-container">
+        <h2 class="text-center text-lg font-bold mb-4">Sign Up</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block mb-1">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error">{{ field.errors|join:", " }}</div>
+                {% endif %}
+                <div class="helper-text">
+                    {% if field.name == "username" %}
+                    Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit">Sign Up</button>
+            <p class="text-center mt-4">
+                <a href="{% url 'login' %}" class="text-blue-500 hover:underline">Already have an account?</a>
+            </p>
+        </form>
+    </div>
+</section>
+{% endblock content %}

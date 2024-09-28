@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    DJCRM/{% block title %}{% endblock title %}
+  </title>
+  {% block extra_head %}{% endblock extra_head %}
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="{% static 'js/scripts.js' %}"></script>
+
+</head>
+
+
+<body>
+  {% include 'leads/navbar.html' %}
+
+  <main class="bg-gray-50 flex justify-center items-center min-h-[90vh] m-0 py-8 ">
+    {% block content %}
+
+    {% endblock content %}
+  </main>
+
+</body>
+
+</html>
