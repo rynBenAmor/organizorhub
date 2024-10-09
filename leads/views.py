@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import *
-from .forms import LeadForm, CustomUserCreationForm
+from .forms import LeadForm, CustomUserCreationForm, LeadCategorForm
 from django.views import generic
 
 from django.core.mail import send_mail
@@ -121,7 +121,7 @@ class LeadUpdateView(OroganizorRequiredMixin, generic.UpdateView):
             
 
     def get_success_url(self):
-        return reverse ('leads:list')
+        return reverse('leads:detail', kwargs={'pk': self.object.pk})
     
 
 
@@ -209,21 +209,43 @@ class CategoryDetailView(OroganizorRequiredMixin, generic.DetailView):
         
         return queryset
     
-    # fk is biderectional so no need to fetch for leads and accessed through relation-name property
+    # fk is biderectional 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # Correct the method call to get_object()
+        
         category = self.get_object()
         
         #leads = Lead.objects.filter(category= self.get_object())# alternatively since we have fk : 
-        leads = category.lead_set.all()  # Assuming the Lead model has a ForeignKey to Category
+        leads = category.lead_set.all()  
         context.update({
             'leads': leads
         })
 
         return context
 
+
+
+
+class LeadCategoryUpdateView(OroganizorRequiredMixin, generic.UpdateView):
+    model = Category
+    template_name = 'leads/category_update.html'
+    form_class = LeadCategorForm
+
+    def get_queryset(self):
+        user = self.request.user
+        
+        if user.is_organizor:
+            queryset = Lead.objects.filter(organization=user.userprofile)
+        
+        elif user.is_agent:
+            queryset = Lead.objects.filter(organization=user.agent.organization)
+            
+            queryset =  Lead.objects.filter(agent__user=user)
+        
+        return queryset
+            
+    def get_success_url(self):
+        return reverse('leads:detail', kwargs={'pk': self.object.pk})
 
 
 

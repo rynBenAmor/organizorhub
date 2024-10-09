@@ -89,8 +89,9 @@
     </ul>
     {% endif %}
     {{ form.as_p }}
+
     <a class="text-white hover:text-gray-100">
-      <button type="submit">Login</button>
+      <button type="submit" style="width: 100%;">Login</button>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8m0 0l-4 4m4-4l-4-4" />
       </svg>
@@ -98,6 +99,7 @@
     <a href="{% url 'reset_password' %}" class="block text-center mt-4 text-blue-600 hover:underline">
       Forgot your password?
     </a>
+
   </form>
 </section>
 {% endblock content %}

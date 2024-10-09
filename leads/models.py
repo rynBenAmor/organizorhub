@@ -35,6 +35,10 @@ class Lead(models.Model):
     first_name = models.CharField(null=False, blank=False, max_length=50)
     last_name = models.CharField(null=False, blank=False, max_length=50)  
     age = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    email = models.EmailField(blank=True,null=True, max_length=254)
+    description = models.TextField(blank=True,null=True,)
+    date_added = models.DateField(blank=True,null=True,auto_now_add=True)
+    phone_number = models.CharField(blank=True, null=True, max_length=8)
     
     agent = models.ForeignKey("Agent",null=True, blank=True, on_delete=models.SET_NULL)#when a related agent is gone its leads remain but his fk is sset to null
     organization =  models.ForeignKey(UserProfile, on_delete=models.CASCADE)#to keep track since agent is nullable

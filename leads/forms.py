@@ -27,8 +27,15 @@ class CustomUserCreationForm(UserCreationForm):
 class LeadForm(forms.ModelForm):
     class Meta:
         model = Lead
-        fields = ('first_name', 'last_name', 'age', 'agent', 'organization')
+        fields = ('first_name', 'last_name','email','phone_number', 'age', 'agent', 'organization')
 
+
+
+class LeadCategorForm(forms.ModelForm):    
+
+    class Meta:
+        model = Lead
+        fields = ('category',)
 
 
         
